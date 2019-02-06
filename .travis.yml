@@ -3,20 +3,20 @@ services:
   - docker
 
 before_install:
-  - docker build -t Choi-Bryan/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t bryanchoi/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run Choi-Bryan/react-test npm test -- --coverage
+  - docker run bryanchoi/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t Choi-Bryan/multi-client ./client
-  - docker build -t Choi-Bryan/multi-nginx ./nginx
-  - docker build -t Choi-Bryan/multi-server ./server
-  - docker build -t Choi-Bryan/multi-worker ./worker
+  - docker build -t bryanchoi/multi-client ./client
+  - docker build -t bryanchoi/multi-nginx ./nginx
+  - docker build -t bryanchoi/multi-server ./server
+  - docker build -t bryanchoi/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push Choi-Bryan/multi-client
-  - docker push Choi-Bryan/multi-nginx
-  - docker push Choi-Bryan/multi-server
-  - docker push Choi-Bryan/multi-worker
+  - docker push bryanchoi/multi-client
+  - docker push bryanchoi/multi-nginx
+  - docker push bryanchoi/multi-server
+  - docker push bryanchoi/multi-worker
