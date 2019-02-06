@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t Choi-Bryan/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run Choi-Bryan/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t Choi-Bryan/multi-client ./client
+  - docker build -t Choi-Bryan/multi-nginx ./nginx
+  - docker build -t Choi-Bryan/multi-server ./server
+  - docker build -t Choi-Bryan/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push Choi-Bryan/multi-client
+  - docker push Choi-Bryan/multi-nginx
+  - docker push Choi-Bryan/multi-server
+  - docker push Choi-Bryan/multi-worker
