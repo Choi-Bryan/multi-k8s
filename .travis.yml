@@ -20,3 +20,16 @@ after_success:
   - docker push bryanchoi/multi-nginx
   - docker push bryanchoi/multi-server
   - docker push bryanchoi/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: ap-northeast-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-ap-northeast-1-298649183257
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
