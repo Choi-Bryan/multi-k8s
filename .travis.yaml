@@ -18,7 +18,7 @@ before_install:
   - docker build -t bryanchoi/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run bryanchoi/react-test npm run test -- --coverage
+  - docker run bryanchoi/react-test npm test -- --coverage
 
 deploy:
   provider: script
